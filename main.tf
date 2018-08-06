@@ -13,3 +13,13 @@ data "template_file" "aws_secret_key" {
     aws_secret = "${var.aws_secret}"
   }
 }
+
+resource "null_resource" "dump_vars" {
+  triggers {
+    keys = "${join(",", data.template_file.aws_access_key)}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${data.template_file.aws_access_key.rendered}"
+  }
+}
