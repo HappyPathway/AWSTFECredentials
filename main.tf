@@ -16,7 +16,7 @@ data "template_file" "aws_secret_key" {
 
 resource "null_resource" "dump_vars" {
   triggers {
-    keys = "${join(",", data.template_file.aws_access_key)}"
+    keys = "${join(",", data.template_file.aws_access_key.rendered)}"
   }
 
   provisioner "local-exec" {
